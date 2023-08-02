@@ -3,6 +3,8 @@ import 'package:flutter_expense_tracker/widgets/expenses_list/expenses_list.dart
 import 'package:flutter_expense_tracker/models/expense.dart';
 import 'package:flutter_expense_tracker/widgets/new_expense.dart';
 
+import 'chart/chart.dart';
+
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
@@ -54,11 +56,13 @@ class _ExpensesState extends State<Expenses> {
       SnackBar(
         duration: const Duration(seconds: 3),
         content: const Text('Expense deleted.'),
-        action: SnackBarAction(label: 'Undo', onPressed: (){
-          setState(() {
-            _registeredExpenses.insert(expenseIndex, expense);
-          });
-        }),
+        action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              setState(() {
+                _registeredExpenses.insert(expenseIndex, expense);
+              });
+            }),
       ),
     );
   }
@@ -88,7 +92,9 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text('The chart'),
+          Chart(
+            expenses: _registeredExpenses,
+          ),
           Expanded(child: mainContent),
         ],
       ),
